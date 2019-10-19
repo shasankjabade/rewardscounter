@@ -10,7 +10,7 @@ class App extends Component {
   }
  
   componentWillMount() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 300; i++) {
       const user = {
         name: Faker.internet.userName(),
         email: Faker.internet.email(),
