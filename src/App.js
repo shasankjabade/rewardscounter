@@ -1,6 +1,7 @@
-import React,{Component} from 'react';
-import Faker from 'faker';
-import {Table, Divider, Tag} from 'antd';
+import React,{Component} from 'react'; // importing react and react.component
+import Faker from 'faker'; // importing faker library to generate fake data
+import {Table} from 'antd'; // importing table from ant design library
+// declaring the columns 
 
 const columns = [
   {
@@ -45,7 +46,7 @@ const columns = [
     key : 'totalRewards'
   }
 ]
-
+// App Component
 class App extends Component {
   constructor(props) {
     super(props)
@@ -59,8 +60,7 @@ class App extends Component {
       const user = {
         key : i,
         name: Faker.internet.userName(),
-        
-        firstMonth: parseInt(Faker.finance.amount(0,200,0)),
+        firstMonth: parseInt(Faker.finance.amount(0,200,0,)),
         secondMonth: parseInt(Faker.finance.amount(0,200,0)),
         thirdMonth: parseInt(Faker.finance.amount(0,200,0))
 
@@ -70,6 +70,8 @@ class App extends Component {
       }))
     }
   }
+
+  // Rewards calculator Function
   rewardsCalc = (price) => {
     let rewards = 0;
     if(price > 100)
@@ -87,29 +89,31 @@ class App extends Component {
   
   
   renderUsers(user) {
+   return  {
     
-    return (
-      <div style={{ border: 'solid 1px #eee' }}>
-        
-        <h4>Name: {user.name}</h4>
-        <h4>First Month: {user.firstMonth}</h4>
-        <h4>First Month Rewards: {this.rewardsCalc(user.firstMonth)}</h4>
-        <h4>Second Month: {user.secondMonth}</h4>
-        <h4>Second Month Rewards: {this.rewardsCalc(user.secondMonth)}</h4>
-        <h4>Third Month: {user.thirdMonth}</h4>
-        <h4>Third Month Rewards: {this.rewardsCalc(user.thirdMonth)}</h4>
-        
-        <h4>Total Rewards: {this.rewardsCalc(user.firstMonth) + this.rewardsCalc(user.secondMonth) + this.rewardsCalc(user.thirdMonth)}</h4>
-      </div>
-    )
+    name: user.name,
+    firstMonth : user.firstMonth,
+    firstMonthRewards : this.rewardsCalc(user.firstMonth),
+    secondMonth : user.secondMonth,
+    secondMonthRewards : this.rewardsCalc(user.secondMonth),
+    thirdMonth : user.thirdMonth,
+    thirdMonthRewards : this.rewardsCalc(user.thirdMonth),
+    totalRewards : this.rewardsCalc(user.firstMonth) + this.rewardsCalc(user.secondMonth) + this.rewardsCalc(user.thirdMonth)
   }
+   
+  }
+
+  
   
   render() {
     return <div>
     
-    <Table columns={columns} />
-    {this.state.users.map(user => this.renderUsers(user))}
+    <Table 
+      columns={columns} 
+      dataSource ={this.state.users.map(user => this.renderUsers(user))} /> 
+    
     </div>
+
    
   }
 }
